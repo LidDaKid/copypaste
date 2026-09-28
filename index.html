@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>copypaste</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text x='50%' y='24' font-size='26' text-anchor='middle' fill='%23ff3d9a'>✧</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Silkscreen&family=Inter:wght@400;500;600&family=Noto+Sans+Symbols&family=Noto+Sans+Symbols+2&family=Noto+Sans+Math&family=Noto+Music&display=swap">
+<link rel="stylesheet" href="style.css?v=3">
+</head>
+<body>
+<header>
+  <h1>copypaste</h1>
+  <nav id="pages">
+    <a href="#symbols" data-page="symbols">symbols</a>
+    <a href="#fonts" data-page="fonts">fonts</a>
+  </nav>
+</header>
+
+<main id="symbols" class="page">
+  <aside id="side"></aside>
+  <section id="main">
+    <div id="topbar">
+      <input id="search" type="search" placeholder="search" autocomplete="off">
+    </div>
+    <h2 id="title"></h2>
+    <div id="grid"></div>
+  </section>
+</main>
+
+<main id="fonts" class="page">
+  <section id="fontmain">
+    <textarea id="fontin" rows="2" placeholder="type here"></textarea>
+    <div id="styles"></div>
+  </section>
+</main>
+
+<footer id="tray">
+  <input id="trayText" type="text" aria-label="collected symbols">
+  <button id="trayCopy">copy all</button>
+  <button id="trayClear" class="ghost">clear</button>
+</footer>
+
+<div id="toast"></div>
+
+<script src="symbols.js?v=3"></script>
+<script src="fonts.js?v=2"></script>
+</body>
+</html>
