@@ -38,7 +38,7 @@
   var SUB = table('aehijklmnoprstuvx' + DG + '+-=()', 'ₐₑₕᵢⱼₖₗₘₙₒₚᵣₛₜᵤᵥₓ₀₁₂₃₄₅₆₇₈₉₊₋₌₍₎');
 
   // look-alike alphabets (same letters, borrowed from other scripts)
-  function fake(to) { return both(table(LO, to)); }
+  function fake(to) { return each(both(table(LO, to))); }
 
   // glitch: marks piled on each letter (same every time for the same text)
   var ABOVE = [], BELOW = [];
@@ -56,6 +56,15 @@
         return out;
       }).join('');
     };
+  }
+
+  // random: every letter gets a different style (picked fresh each time the list redraws)
+  function randomMix(s) {
+    var pool = S[0][1].concat(S[2][1], S[3][1], S[5][1]).map(function (x) { return x[1]; });
+    return [...s].map(function (ch) {
+      if (ch === ' ' || ch === '\n') return ch;
+      return pool[Math.floor(Math.random() * pool.length)](ch);
+    }).join('');
   }
 
   var S = [
@@ -113,6 +122,11 @@
       ['money', fake('₳฿₵ĐɆ₣₲ⱧłJ₭Ⱡ₥₦Ø₱QⱤ₴₮ɄV₩ӾɎⱫ')],
       ['runes', fake('ᚨᛒᚲᛞᛖᚠᚷᚺᛁᛃᚲᛚᛗᚾᛟᛈᛩᚱᛋᛏᚢᚡᚹᛪᛃᛉ')]
     ]],
+    ['random', [
+      ['random', randomMix],
+      ['random again', randomMix],
+      ['random + lines', function (s) { return [...randomMix(s)].map(function (c) { return c === ' ' ? c : c + ['̲', '̶', '̅', ''][Math.floor(Math.random() * 4)]; }).join(''); }]
+    ]],
     ['glitch', [
       ['glitch', glitch(2)],
       ['more glitch', glitch(5)],
@@ -155,7 +169,7 @@
         span.textContent = out;
         row.appendChild(b);
         row.appendChild(span);
-        row.addEventListener('click', function () { CP.copy(st[1](input.value || input.placeholder), row); });
+        row.addEventListener('click', function () { CP.copy(span.textContent, row); });
         frag.appendChild(row);
       });
     });
