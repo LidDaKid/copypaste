@@ -226,3 +226,22 @@ button:hover { filter: brightness(1.12); }
 
 /* inside screenies: screenies has the header */
 .embed header { display: none; }
+
+/* glitch slider + empty-looking rows */
+.gl-slide { display: flex; align-items: center; gap: 12px; max-width: 760px; margin-top: 12px; font: 11px/1 Silkscreen, monospace; color: var(--dim); }
+.gl-slide input { flex: 1; accent-color: var(--pink); }
+.st span:empty::before, .st span { min-height: 28px; }
+
+/* ---------- bio maker ---------- */
+#biomain { flex: 1; overflow-y: auto; padding: 16px 18px 90px; display: flex; gap: 22px; align-items: flex-start; }
+.bio-form { width: 280px; flex: none; display: flex; flex-direction: column; gap: 8px; position: sticky; top: 0; }
+.bio-form input, .bio-form select { padding: 10px 12px; background: var(--field); border: 1px solid var(--line); border-radius: 10px; outline: none; color: var(--text); }
+.bio-form input:focus, .bio-form select:focus { border-color: var(--pink); }
+.bio-form select option { background: var(--panel); }
+.bio-out { flex: 1; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; }
+.bio-card { padding: 12px 14px; background: var(--field); border: 1px solid transparent; border-radius: 12px; cursor: pointer; }
+.bio-card:hover { border-color: var(--pink); }
+.bio-card b { display: block; margin-bottom: 8px; font: 11px/1 Silkscreen, monospace; color: var(--dim); }
+.bio-text { white-space: pre-wrap; font: 16px/1.5 var(--glyph); overflow-wrap: anywhere; }
+.bio-card.pop { animation: pop .35s; }
+@media (max-width: 760px) { #biomain { flex-direction: column; } .bio-form { width: 100%; position: static; } }

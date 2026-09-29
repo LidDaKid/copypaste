@@ -151,6 +151,56 @@
     ]]
   ];
 
+  // name art: a font + a frame together
+  var F = {};
+  S.forEach(function (g) { g[1].forEach(function (st) { F[st[0]] = st[1]; }); });
+  S.splice(1, 0, ['name art', [
+    ['cloud tiny', function (s) { return '꒰ ' + F.tiny(s) + ' ꒱'; }],
+    ['sparkle cursive', function (s) { return '✧ ' + F['bold cursive'](s) + ' ✧'; }],
+    ['gothic cartouche', function (s) { return '𓆩 ' + F.gothic(s) + ' 𓆪'; }],
+    ['starry cursive', function (s) { return '⋆｡°✩ ' + F.cursive(s) + ' ✩°｡⋆'; }],
+    ['angel caps', function (s) { return 'ʚ ' + F['small caps'](s) + ' ɞ'; }],
+    ['goth', function (s) { return '♱ ' + F['bold gothic'](s) + ' ♱'; }],
+    ['bunny', function (s) { return '˚₊‧꒰ა ' + s + ' ໒꒱ ‧₊˚'; }],
+    ['cross outline', function (s) { return '✞ ' + F.outlined(s) + ' ✞'; }],
+    ['dagger type', function (s) { return '⸸ ' + F.typewriter(s) + ' ⸸'; }],
+    ['bow italic', function (s) { return '୨ৎ ' + F.italic(s) + ' ୨ৎ'; }],
+    ['star bubble', function (s) { return '★ ' + F.bubble(s) + ' ★'; }],
+    ['moon', function (s) { return '☾ ' + F['sans bold italic'](s) + ' ☽'; }],
+    ['vaporwave', function (s) { return '【 ' + F.wide(s) + ' 】'; }],
+    ['hearts cursive', function (s) { return '⋆.˚ ' + F.cursive(s.split('').join('♡')) + ' ˚.⋆'; }],
+    ['scene', function (s) { return 'xX ' + F['sans bold'](s) + ' Xx'; }],
+    ['divider name', function (s) { return '─── ⋆⋅ ' + F['small caps'](s) + ' ⋅⋆ ───'; }]
+  ]]);
+
+  // blank + spacing (for games that want a name but you want it empty, or spaces that don't collapse)
+  S.push(['blank + spacing', [
+    ['invisible name (ㅤ)', function () { return 'ㅤ'; }],
+    ['invisible (braille blank)', function () { return '⠀'; }],
+    ['zero-width space', function () { return '​'; }],
+    ['wide spaces', function (s) { return s.replace(/ /g, '　'); }],
+    ['no-break spaces', function (s) { return s.replace(/ /g, ' '); }],
+    ['blank lines', function () { return '⠀\n⠀\n⠀'; }]
+  ]]);
+
+  // glitch slider: how glitchy "your glitch" is
+  var glitchN = 8;
+  try { glitchN = +localStorage.getItem('cp-glitch') || 8; } catch (e) { /* ignore */ }
+  S.forEach(function (g) {
+    if (g[0] === 'glitch') g[1].unshift(['your glitch', function (s) { return glitch(glitchN)(s); }]);
+  });
+  var slide = document.createElement('label');
+  slide.className = 'gl-slide';
+  slide.innerHTML = '<span>glitch</span><input type="range" min="1" max="40" step="1">';
+  var range = slide.querySelector('input');
+  range.value = glitchN;
+  range.addEventListener('input', function () {
+    glitchN = +range.value;
+    try { localStorage.setItem('cp-glitch', glitchN); } catch (e) { /* ignore */ }
+    draw();
+  });
+  list.parentNode.insertBefore(slide, list);
+
   function draw() {
     var text = input.value || input.placeholder;
     list.innerHTML = '';

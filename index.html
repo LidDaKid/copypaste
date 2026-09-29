@@ -8,7 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Silkscreen&family=Inter:wght@400;500;600&family=Noto+Sans+Symbols&family=Noto+Sans+Symbols+2&family=Noto+Sans+Math&family=Noto+Music&display=swap">
-<link rel="stylesheet" href="style.css?v=4">
+<link rel="stylesheet" href="style.css?v=6">
+<script>if (/embed/.test(location.search)) document.documentElement.className = 'embed';</script>
 </head>
 <body>
 <header>
@@ -16,6 +17,7 @@
   <nav id="pages">
     <a href="#symbols" data-page="symbols">symbols</a>
     <a href="#fonts" data-page="fonts">fonts</a>
+    <a href="#bio" data-page="bio">bio maker</a>
   </nav>
 </header>
 
@@ -37,6 +39,10 @@
   </section>
 </main>
 
+<main id="bio" class="page">
+  <section id="biomain"></section>
+</main>
+
 <footer id="tray">
   <input id="trayText" type="text" aria-label="collected symbols">
   <button id="trayCopy">copy all</button>
@@ -45,7 +51,8 @@
 
 <div id="toast"></div>
 
-<script src="symbols.js?v=5"></script>
-<script src="fonts.js?v=2"></script>
+<script src="symbols.js?v=6"></script>
+<script src="fonts.js?v=5"></script>
+<script src="bio.js?v=1"></script>
 </body>
 </html>
