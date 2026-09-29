@@ -121,7 +121,9 @@ var CP = (function () {
     sections.forEach(function (s) {
       if (s.head) { var h = document.createElement('h4'); h.textContent = s.head; frag.appendChild(h); }
       s.items.forEach(function (t) {
-        var el = tile(t, { combo: opts && opts.wide });
+        var el = tile(t, { combo: (opts && opts.wide) || s.wide });
+        // wide combos get more columns the longer their longest line is
+        if (s.wide) el.style.gridColumn = 'span ' + Math.min(8, Math.max(3, Math.ceil(Math.max.apply(null, t.split('\n').map(function (l) { return [...l].length; })) / 4)));
         if (opts && opts.font) el.style.fontFamily = "'" + opts.font + "', " + getComputedStyle(document.documentElement).getPropertyValue('--glyph');
         frag.appendChild(el);
       });
@@ -180,7 +182,7 @@ var CP = (function () {
     var cuteCount = cute.reduce(function (n, s) { return n + s.c.length; }, 0);
     // load the fonts the cute picks + combos need (the rare-block ones)
     var need = {};
-    cute.concat(combos).forEach(function (s) {
+    cute.concat(combos).concat(DATA.holidays.map(function (h) { return { c: h.s.concat(h.c) }; })).forEach(function (s) {
       s.c.forEach(function (t) { [...t].forEach(function (ch) { var f = fontFor(ch.codePointAt(0)); if (f) need[f] = 1; }); });
     });
     Object.keys(need).forEach(needFont);
@@ -194,6 +196,16 @@ var CP = (function () {
       fill(cute.map(function (s) { return { head: s.n, items: s.c }; }));
     } }].concat(cute.map(function (s, i) {
       return { key: 'cute' + i, label: s.n, count: s.c.length, view: function () { setTitle(s.n, s.c.length); fill([{ items: s.c }]); } };
+    })));
+    var hol = DATA.holidays;
+    function holSections(h) { return [{ head: 'symbols', items: h.s }, { head: 'combos', items: h.c, wide: true }]; }
+    nav('holidays', [{ key: 'hol', label: 'all holidays', count: hol.length, view: function () {
+      setTitle('all holidays', hol.length);
+      var secs = [];
+      hol.forEach(function (h) { secs.push({ head: h.n, items: h.s }); secs.push({ items: h.c, wide: true }); });
+      fill(secs);
+    } }].concat(hol.map(function (h, i) {
+      return { key: 'hol' + i, label: h.n, count: h.s.length + h.c.length, view: function () { setTitle(h.n, h.s.length + h.c.length); fill(holSections(h)); } };
     })));
     nav('combos', combos.map(function (s, i) {
       return { key: 'combo' + i, label: s.n, count: s.c.length, view: function () { setTitle(s.n, s.c.length); fill([{ items: s.c }], { wide: true }); } };
@@ -251,8 +263,8 @@ var CP = (function () {
   /* ---------- start ---------- */
 
   function get(f, type) { return fetch('data/' + f).then(function (r) { return type === 'text' ? r.text() : r.json(); }); }
-  Promise.all([get('cute.json'), get('combos.json'), get('collections.json'), get('blocks.json'), get('fonts.json')]).then(function (r) {
-    DATA = { cute: r[0], combos: r[1], collections: r[2], blocks: r[3], fonts: r[4] };
+  Promise.all([get('cute.json'), get('combos.json'), get('collections.json'), get('blocks.json'), get('fonts.json'), get('holidays.json')]).then(function (r) {
+    DATA = { cute: r[0], combos: r[1], collections: r[2], blocks: r[3], fonts: r[4], holidays: r[5] };
     build();
     return get('names.txt', 'text');
   }).then(function (txt) {

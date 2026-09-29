@@ -112,6 +112,8 @@ h2 small { margin-left: 8px; color: var(--dim); font: 12px Inter, sans-serif; }
 }
 .t:hover { border-color: var(--pink); }
 .t.combo { font-size: 20px; font-family: 'Segoe UI', 'Noto Sans', var(--glyph); justify-content: flex-start; padding: 0 12px; }
+.t.span { grid-column: span 3; }
+.t.combo { white-space: pre; height: auto; min-height: 58px; padding: 8px 12px; line-height: 1.25; }
 .t.blank { font: 10px/1.2 Silkscreen, monospace; color: var(--dim); text-align: center; white-space: normal; border: 1px dashed var(--line); }
 .t .fav {
   position: absolute;
@@ -221,3 +223,6 @@ button:hover { filter: brightness(1.12); }
   .st { flex-direction: column; align-items: flex-start; gap: 4px; }
   .st b { width: auto; }
 }
+
+/* inside screenies: screenies has the header */
+.embed header { display: none; }
