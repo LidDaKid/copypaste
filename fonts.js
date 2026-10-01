@@ -173,6 +173,16 @@
     ['divider name', function (s) { return '─── ⋆⋅ ' + F['small caps'](s) + ' ⋅⋆ ───'; }]
   ]]);
 
+  // templates: your text dropped into little frames (the same ones the symbols tab has with ___ blanks)
+  var TPL = { name: 'templates', list: [] };
+  S.splice(2, 0, [TPL.name, TPL.list]);
+  fetch('data/templates.json?v=8').then(function (r) { return r.json(); }).then(function (list) {
+    list.forEach(function (t, i) {
+      TPL.list.push(['template ' + (i + 1), function (s) { return t.split('___').join(s); }]);
+    });
+    draw();
+  }).catch(function () { /* offline: just no templates */ });
+
   // blank + spacing (for games that want a name but you want it empty, or spaces that don't collapse)
   S.push(['blank + spacing', [
     ['invisible name (ㅤ)', function () { return 'ㅤ'; }],

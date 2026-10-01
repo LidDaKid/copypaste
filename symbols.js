@@ -268,7 +268,7 @@ var CP = (function () {
 
   /* ---------- start ---------- */
 
-  var DATA_V = '7'; // bump when data/ changes so browsers don't keep the old lists
+  var DATA_V = '8'; // bump when data/ changes so browsers don't keep the old lists
   function get(f, type) { return fetch('data/' + f + '?v=' + DATA_V).then(function (r) { return type === 'text' ? r.text() : r.json(); }); }
   Promise.all([get('cute.json'), get('combos.json'), get('collections.json'), get('blocks.json'), get('fonts.json'), get('holidays.json'), get('aesthetics.json')]).then(function (r) {
     DATA = { cute: r[0], combos: r[1], collections: r[2], blocks: r[3], fonts: r[4], holidays: r[5], aesthetics: r[6] };
